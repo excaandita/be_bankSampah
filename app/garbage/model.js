@@ -9,13 +9,16 @@ let garbageSchema = mongoose.Schema({
         ref: 'Category'
     },
     toniPrice: {
-        type: Number
+        type: Number,
+        default: 0
     },
     appPrice: {
-        type: Number
+        type: Number,
+        default: 0
     },
     sellPrice: {
-        type: Number
+        type: Number,
+        default: 0
     },
     status: {
         type: String,
