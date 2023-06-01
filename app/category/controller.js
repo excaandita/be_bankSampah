@@ -34,8 +34,7 @@ module.exports = {
                 })
             } else {
                 return res.status(422).json({
-                    message: req.flash('alertMessage'),
-                    fields: req.flash('alertStatus')
+                    message: "Data Not Complete"
                 })
             }
             
