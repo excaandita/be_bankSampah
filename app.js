@@ -7,6 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 var categoryRouter = require('./app/category/router');
+var garbageRouter = require('./app/garbage/router');
 
 var app = express();
 var URL = `/api/v1`;
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(`${URL}/category`, categoryRouter);
+app.use(`${URL}/garbage`, garbageRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
