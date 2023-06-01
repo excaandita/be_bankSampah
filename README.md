@@ -1,4 +1,6 @@
 # be_bankSampah
+Postman : https://documenter.getpostman.com/view/25359891/2s93mBvyZp#ef743602-27b1-4fd1-8811-b5cb6060174c 
+
 MongoDB : /db_bankSampah
 
 Fitur API Bank Sampah
