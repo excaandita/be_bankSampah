@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 var categoryRouter = require('./app/category/router');
 var garbageRouter = require('./app/garbage/router');
 var groupUserRouter = require('./app/group_user/router');
+var userRouter = require('./app/user/router');
 
 var app = express();
 var URL = `/api/v1`;
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(`${URL}/category`, categoryRouter);
 app.use(`${URL}/garbage`, garbageRouter);
 app.use(`${URL}/groupUser`, groupUserRouter);
+app.use(`${URL}/user`, userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
