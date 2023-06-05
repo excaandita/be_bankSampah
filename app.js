@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
+var cors = require('cors')
 
 var categoryRouter = require('./app/category/router');
 var garbageRouter = require('./app/garbage/router');
@@ -25,6 +26,7 @@ app.use(session({
   saveUninitialized: true,  
   cookie: { secure: true }
 }))
+app.use(cors());
 app.use(flash());
 app.use(logger('dev'));
 app.use(express.json());
