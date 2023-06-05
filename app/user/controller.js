@@ -1,5 +1,6 @@
 const User = require('./model')
 var mongoose = require('mongoose')
+const responseHandle = require('../helpers/utils/response.utils')
 
 module.exports = {
     list: async(req, res)=>{
@@ -7,9 +8,11 @@ module.exports = {
             const user = await User.find()
             .populate('group_id') //untuk terhubung dengan collections category
 
-            res.status(200).json({
-                data: user
-            })
+
+            responseHandle.ok(res, user, "berhasil")
+            // res.status(200).json({
+            //     data: user
+            // })
 
         } catch (err) {
             res.status(500).json({

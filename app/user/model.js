@@ -1,4 +1,8 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+
+const HASH_ROUND = 10
+
 let userSchema = mongoose.Schema({
     username: {
         type: String,
@@ -32,7 +36,8 @@ let userSchema = mongoose.Schema({
     },
     group_id: { 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'GroupUser'
+        ref: 'GroupUser',
+        default: '647993670bc10db9acbe1e97'
     },
     status: {
         type: String,
@@ -40,5 +45,30 @@ let userSchema = mongoose.Schema({
         default: 'Y'
     }
 }, {timestamps: true})
+
+userSchema.path('email').validate(async(value)=>{
+    try {
+        const count = await mongoose.model('User').countDocuments({email: value});
+
+        return !count;
+    } catch (err) {
+        throw err;
+    }
+}, attr => `${attr.value} email sudah terdaftar`)
+
+userSchema.path('username').validate(async(value)=>{
+    try {
+        const count = await mongoose.model('User').countDocuments({username: value});
+
+        return !count;
+    } catch (err) {
+        throw err;
+    }
+}, attr => `${attr.value} Username sudah terdaftar`)
+
+userSchema.pre('save', function(next) {
+    this.password = bcrypt.hashSync(this.password, HASH_ROUND)
+    next()
+})
 
 module.exports = mongoose.model('User', userSchema)
