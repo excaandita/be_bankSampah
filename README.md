@@ -31,6 +31,6 @@ Fitur API Bank Sampah
 5. Group User
     - name
 
-**Auth ~: ******
+AUTH
     1. isLoginUser : digunakan untuk validasi melalui token yang dimana role user == 'User' dan digunakan di router untuk hak akses User
     2. isLoginAdmin : digunakan untuk validasi melalui token yang dimana role user == 'Admin' dan digunakan di router untuk hak akses Admin
