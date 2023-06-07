@@ -43,14 +43,14 @@ Routes :
 
 2. USER
     - url/api/v1/user/list -> digunakan untuk menampilkan list user (isLogin)
-    - ~~~~~~~~~~/user/create -> digunakan untuk menambahkan user (isLogin, isLoginAdmin)
-    - ~~~~~~~~~~~~~~~/get/:id -> digunakan untuk menampilkan user berdasarkan id (isLogin)
-    - ~~~~~~~~~~~~~~~/edit/:id -> digunakan untuk merubah user berdasarkan id (isLogin, isLoginAdmin)
-    - ~~~~~~~~~~~~~~~/delete/:id -> digunakan untuk menghapus user berdasarkan id (isLogin, isLoginAdmin)
+    - ==========/user/create -> digunakan untuk menambahkan user (isLogin, isLoginAdmin)
+    - ===============/get/:id -> digunakan untuk menampilkan user berdasarkan id (isLogin)
+    - ===============/edit/:id -> digunakan untuk merubah user berdasarkan id (isLogin, isLoginAdmin)
+    - ===============/delete/:id -> digunakan untuk menghapus user berdasarkan id (isLogin, isLoginAdmin)
 
 3. CATEGORY
     - url/api/v1/category/list -> digunakan untuk menampilkan list category
-    - ~~~~~~~~~~/category/create -> digunakan untuk menambahkan category (isLogin, isLoginUser)
-    - ~~~~~~~~~~~~~~~/get/:id -> digunakan untuk menampilkan category berdasarkan id
-    - ~~~~~~~~~~~~~~~/edit/:id -> digunakan untuk merubah category berdasarkan id (isLogin, isLoginUser)
-    - ~~~~~~~~~~~~~~~/delete/:id -> digunakan untuk menghapus category berdasarkan id (isLogin, isLoginUser)
+    - ==========/category/create -> digunakan untuk menambahkan category (isLogin, isLoginUser)
+    - ===============/get/:id -> digunakan untuk menampilkan category berdasarkan id
+    - ===============/edit/:id -> digunakan untuk merubah category berdasarkan id (isLogin, isLoginUser)
+    - ===============/delete/:id -> digunakan untuk menghapus category berdasarkan id (isLogin, isLoginUser)
