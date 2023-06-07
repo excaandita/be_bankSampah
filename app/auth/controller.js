@@ -39,7 +39,6 @@ module.exports = {
                 responseHandle.forbidden(res, "Username or Email not registered");
             }
         }).catch((error) => {
-            console.log(error)
             responseHandle.error(res);
 
             next();
