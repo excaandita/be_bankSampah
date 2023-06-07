@@ -24,6 +24,12 @@ module.exports = {
                         }
                     }, config.jwtSecret)
 
+                    req.session.userLogin = {
+                        id: user.id,
+                        username: user.username,
+                        token: token
+                    }
+
                     responseHandle.ok(res, {token});
 
                 } else {
@@ -37,10 +43,14 @@ module.exports = {
             responseHandle.error(res);
 
             next();
-        })
+        })  
+    },
 
-       
-            
-        
+    logout: (req, res) => {
+        req.session.destroy()
+        responseHandle.ok(res, "Successfully logged out")
+
     }
+
+
 }

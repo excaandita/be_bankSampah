@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const {list, create, get, edit, deleteItem} = require('./controller');
-const {isLoginUser} = require('../middleware/auth');
+const {isLoginAdmin, isLoginUser, isLogin} = require('../middleware/auth');
 
 /* GET home page. */
-router.get('/list', isLoginUser, list);
-router.post('/create', isLoginUser, create);
-router.get('/get/:id', isLoginUser, get);
-router.put('/edit/:id', isLoginUser, edit);
-router.delete('/delete/:id', isLoginUser, deleteItem);
+router.get('/list', list);
+router.post('/create', isLogin, isLoginUser, create);
+router.get('/get/:id', get);
+router.put('/edit/:id', isLogin, isLoginUser, edit);
+router.delete('/delete/:id', isLogin, isLoginUser, deleteItem);
 
 module.exports = router;

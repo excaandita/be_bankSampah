@@ -50,5 +50,21 @@ module.exports = {
         } catch (error) {
             responseHandle.unauthorized(res)
         }
+    },
+
+    isLogin: async(req, res, next) => {
+        try {
+            console.log(req.session.userLogin)
+
+            if(req.session.userLogin === null || req.session.userLogin === undefined) {
+                throw new Error();
+            } else {
+                next();
+            }
+        } catch (error) {
+            responseHandle.forbidden(res, "You are not logged in");
+        }
+        
+        
     }
 }
