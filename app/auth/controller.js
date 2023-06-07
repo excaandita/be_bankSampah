@@ -1,32 +1,46 @@
 const responseHandle = require('../helpers/utils/response.utils')
 const User = require('../user/model')
-const jwtMiddlewares = require('../helpers/middleware')
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const config = require('../../config')
 
 module.exports = {
 
-    login: async (req, res) => {
-        try {
-            const {username, password} = req.body
-            
-            const checkUser = await User.findOne({username: username});
-    
-            if(!checkUser) return responseHandle.badRequest(res, 'User not found')
+    login: async (req, res, next) => {
+        const {username, password} = req.body
 
-            const passwordMatch = await bcrypt.compare(password, checkUser.password);
-            
-            
-            if (!passwordMatch) {
-                return responseHandle.badRequest(res, "Invalid username or password"); 
+        User.findOne({username: username}).then((user)=>{
+            if(user){
+                const checkPassword = bcrypt.compareSync(password, user.password)
+                if(checkPassword){
+                    const token = jwt.sign({
+                        user: {
+                            id: user.id,
+                            username: user.username,
+                            email: user.email,
+                            fullname: user.fullname,
+                            phoneNumber: user.phoneNumber,
+                            address: user.address
+                        }
+                    }, config.jwtSecret)
+
+                    responseHandle.ok(res, {token});
+
+                } else {
+                    responseHandle.forbidden(res, "Password is not correct");
+                }
+            } else {
+                responseHandle.forbidden(res, "Username or Email not registered");
             }
-            
-            const token = jwtMiddlewares.generateToken(checkUser._id);
-            // console.log(token);
-            responseHandle.ok(res, token, "Token generated")
-
-        } catch (err) {
-            console.log(err)
+        }).catch((error) => {
+            console.log(error)
             responseHandle.error(res);
-        }
+
+            next();
+        })
+
+       
+            
+        
     }
 }
