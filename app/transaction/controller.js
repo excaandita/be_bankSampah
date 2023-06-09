@@ -1,5 +1,5 @@
 const Transaction = require('./model')
-const HistoryTransaction = require('../history_transaction/model')
+const HisTransactionController = require('../history_transaction/controller')
 const Garbage = require('../garbage/model')
 var mongoose = require('mongoose')
 const responseHandle = require('../helpers/utils/response.utils')
@@ -27,33 +27,32 @@ module.exports = {
                 var garbage = await Garbage.findOne({_id: payload.garbages[i].id_garbage})
                 
                 payload.garbages[i].garbageName = garbage.name
-                payload.garbages[i].price = garbage.appPrice
-                payload.garbages[i].totalPrice = garbage.appPrice * payload.garbages[i].qty
+                payload.garbages[i].price = garbage.sellPrice
+                payload.garbages[i].totalPrice = garbage.sellPrice * payload.garbages[i].qty
                 tot = tot+payload.garbages[i].totalPrice
             }
-            
             payload.priceTransaction = tot
             
             // save to collection transaction
             let transaction = new Transaction(payload)    
                 await transaction.save();   
 
-            
-            let historyTransaction = new HistoryTransaction({
-                id_transaction: payload._id,
-
-            });
-
-            // show saved data
             transaction = await Transaction.findOne(transaction._id)
                 .populate('user')
                 .populate('officer')
                 .populate('garbage_name')
-            
+
+            //save to collection History Transaction
+            await HisTransactionController.save_transaction(transaction);
+                
             responseHandle.ok(res, transaction);
 
         } catch (error) {
             responseHandle.error(res);
         }
+    },
+
+    edit: async(req, res, next) => {
+
     }
 }

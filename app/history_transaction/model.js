@@ -10,23 +10,23 @@ let historyTransactionSchema = mongoose.Schema({
         require:[true, 'Harga Total Harus Diisi']
     },
     garbages: [{
-        garbage_name: {
+        id_garbage: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Garbage',
         },
+        garbageName: {
+            type: String
+        },
         qty: {
             type:Number,
-            require: [true, 'Quantity harus diisi'],
             default: 0
         },
         price: {
             type:Number,
-            require: [true, 'Harga per barang harus diisi'],
             default: 0
         },
         totalPrice: {
             type:Number,
-            require: [true, 'Total Harga harus diisi'],
             default: 0
         }
     }],
