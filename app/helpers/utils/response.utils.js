@@ -1,10 +1,15 @@
 const responseWithData = (res, statusCode, data) => res.status(statusCode).json(data);
 
 
-const ok = (res, data, title) => {
+const ok = (res, data, title=null) => {
+    resp_title = 'OK!'
+    if(title !== null) {
+        resp_title = title
+    } 
+
     responseWithData(res, 200, {
         status: 200,
-        message: "OK",
+        message: resp_title,
         data: data
     })
 }
@@ -22,7 +27,8 @@ const unauthorized = (res, data) => responseWithData(res, 401, {
 
 const created = (res, data) => responseWithData(res, 201, {
     status: 201,
-    message: "Successfully Created"
+    message: "Successfully Created",
+    data: data
 })
 
 const error = (res, data) => responseWithData(res, 500, {

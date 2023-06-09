@@ -6,14 +6,23 @@ const responseHandle = require('../helpers/utils/response.utils')
 
 module.exports = {
     list: async(req, res)=>{
-        // const {page = 1 , limit = 10} = req.query
+        const {page = 1 , limit = 10} = req.query
         try {
             const transaction = await Transaction.find()
                 .populate('user')
                 .populate('officer')
                 .populate('garbage_name')
+                .limit(limit * 1)
+                .skip((page - 1) * limit)
+                .exec();
 
-            responseHandle.ok(res, transaction)
+            const count = await Transaction.countDocuments(); 
+            responseHandle.ok(res, {
+                transaction,
+                totalData: count,
+                totalPages: Math.ceil(count / limit),
+                currentPage: page,
+            })
         } catch (err) {
             responseHandle.error(res);
         }
@@ -43,16 +52,73 @@ module.exports = {
                 .populate('garbage_name')
 
             //save to collection History Transaction
-            await HisTransactionController.save_transaction(transaction);
+            await HisTransactionController.save_transaction(transaction, "Create  Transaction");
                 
-            responseHandle.ok(res, transaction);
+            responseHandle.created(res, transaction);
 
         } catch (error) {
             responseHandle.error(res);
         }
     },
 
-    edit: async(req, res, next) => {
+    get: async(req, res, next) => {
+        try {
+            const {id} = req.params
 
-    }
+            transaction = await Transaction.findOne({_id: id})
+                .populate('user')
+                .populate('officer')
+                .populate('garbage_name')
+            
+            if(transaction !== null){
+                responseHandle.ok(res, transaction);
+            } else {
+                responseHandle.ok(res, transaction, "Transaction not found");
+            }
+            
+        } catch (err) {
+            res.status(500).json({
+                message: err.message || `Internal Server Error`
+            })
+        }
+    },
+
+    edit: async(req, res, next) => {
+        try {
+            const {id} = req.params
+            const payload = req.body
+            
+            var tot = 0
+            for (let i = 0; i < payload.garbages.length; i++) {
+                var garbage = await Garbage.findOne({_id: payload.garbages[i].id_garbage})
+                
+                payload.garbages[i].garbageName = garbage.name
+                payload.garbages[i].price = payload.garbages[i].price
+                payload.garbages[i].totalPrice = payload.garbages[i].price * payload.garbages[i].qty
+                tot = tot+payload.garbages[i].totalPrice
+            }
+            payload.priceTransaction = tot
+            
+            // save to collection transaction
+            let transaction = await Transaction.findOneAndUpdate(
+                    {_id: id}, 
+                    payload
+                );    
+
+            transaction = await Transaction.findOne(transaction._id)
+                .populate('user')
+                .populate('officer')
+                .populate('garbage_name')
+
+            //save to collection History Transaction
+            await HisTransactionController.save_transaction(transaction, "Edit Transaction");
+                
+            responseHandle.ok(res, transaction, "Successfully updated");
+                
+        } catch (err) {
+            responseHandle.error(res);
+        }
+    },
+
+
 }

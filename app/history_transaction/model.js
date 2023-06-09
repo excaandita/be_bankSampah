@@ -38,6 +38,9 @@ let historyTransactionSchema = mongoose.Schema({
         type: String,
         enum: ['Pending', 'Success', 'Failed'],
         default: 'Pending'
+    },
+    historyNote: {
+        type: String
     }
 }, {timestamps: true})
 

@@ -56,7 +56,6 @@ module.exports = {
         try {
             const token = req.headers.authorization ? req.headers.authorization.replace('Bearer ', '') : null;
 
-            
             if(req.session.userLogin === null || req.session.userLogin === undefined) {
                 if(req.session.userLogin.token !== token) {
                     throw new Error();

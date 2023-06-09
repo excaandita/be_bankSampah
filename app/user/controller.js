@@ -4,11 +4,6 @@ const responseHandle = require('../helpers/utils/response.utils')
 
 module.exports = {
     list: async(req, res)=>{
-
-        // const page = parseInt(req.query.page)
-        // const limit = parseInt(req.query.limit)
-        // const skipLimit = (page - 1) * limit
-        // const results = {};
         const {page = 1 , limit = 10} = req.query
         try {
             user = await User.find().populate('group_id')
@@ -24,7 +19,7 @@ module.exports = {
                 totalData: count,
                 totalPages: Math.ceil(count / limit),
                 currentPage: page,
-            }, "berhasil")
+            }, "Success!");
             // res.status(200).json({
             //     data: user
             // })
