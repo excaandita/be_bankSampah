@@ -25,10 +25,22 @@ Fitur API Bank Sampah
 4. Transaction
     - date
     - username (id_user)
-    - garbage_name (id_garbage)
-    - qty
-    - total_price
-5. Group User
+    - garbages 
+        - garbage_name (id_garbage)
+        - qty
+        - price
+        - total_price
+    - total_transaction
+    - officer
+5. history transaction
+    - id_transaction
+    - garbages 
+        - garbage_name (id_garbage)
+        - qty
+        - price
+        - total_price
+    - officer
+7. Group User
     - name
 
 AUTH
