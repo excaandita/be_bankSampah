@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const {list, create, get, edit, deleteItem} = require('./controller');
-const {isLoginAdmin, isLoginUser, isLogin} = require('../middleware/auth');
+const {isLoginAdmin, isLoginUser} = require('../middleware/auth');
 
 /* GET home page. */
 router.get('/list', list);
